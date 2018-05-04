@@ -288,13 +288,13 @@ namespace ranges
                     Rng, range_difference_type_t<Rng>>::value)
               : detail::stride_view_base<Rng>{std::move(rng), stride}
             {}
-            CONCEPT_REQUIRES(SizedRange<Rng const>())
+            CONCEPT_REQUIRES(Sized<Rng const>() && Range<Rng>)
             constexpr range_size_type_t<Rng> size() const
                 noexcept(noexcept(ranges::size(std::declval<Rng const &>())))
             {
                 return size_(ranges::size(this->base()));
             }
-            CONCEPT_REQUIRES(!SizedRange<Rng const>() && SizedRange<Rng>())
+            CONCEPT_REQUIRES(!Sized<Rng const>() && SizedRange<Rng>())
             RANGES_CXX14_CONSTEXPR range_size_type_t<Rng> size()
                 noexcept(noexcept(ranges::size(std::declval<Rng &>())))
             {
